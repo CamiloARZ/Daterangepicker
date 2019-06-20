@@ -1,3 +1,51 @@
+//Filstro de datatable
+$.fn.dataTableExt.afnFiltering.push(
+  function(oSettings, aData, iDataIndex){
+      
+      // Filtro del Select
+      var SelectFilter 	= $( "#Select").val();
+       
+      // Corresponde a la columna que filtra el select
+      filterColumn   = aData[0];          
+        
+      if( SelectFilter != undefined ){
+
+          if(SelectFilter != ''){
+              if(SelectFilter != filterColumn ){
+                  return false;
+              }
+          }
+      }
+
+      if (typeof aData._date == 'undefined'){
+          aData._date = aData[1];
+      }
+
+      if (minDateFilter && !isNaN(minDateFilter)) {
+          if (aData._date < minDateFilter) {              
+              return false;
+          }
+      }
+
+      if (maxDateFilter && !isNaN(maxDateFilter)) {
+
+          if (aData._date > maxDateFilter) {
+              return false;
+          }
+      }
+
+      return true;
+
+  }
+);
+
+
+// Init Inpu #filterdaterange
+$(document).ready(function() {
+    $("#filterdaterange").val("");
+});
+
+
 // Daterangepicker
     $(function(){$('#filterdaterange').daterangepicker({
         autoUpdateInput: false,
